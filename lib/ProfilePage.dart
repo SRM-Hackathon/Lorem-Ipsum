@@ -2,34 +2,60 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
-
+import 'package:firebase_database/firebase_database.dart';
+import 'following.dart';
+final databaseReference = FirebaseDatabase.instance.reference();
+TextEditingController userNameController = new TextEditingController();
+TextEditingController instagramUserNameController = new TextEditingController();
+TextEditingController userBioController = new TextEditingController();
+var userName = '';
+var userBio = '';
+var instagramUserName='';
+var selectedInterest;
+var selectedTrip;
+String userID;
 class ProfilePage extends StatefulWidget {
-  ProfilePage({this.userId});
 
+  ProfilePage({this.userId});
   final String userId;
+
+
+
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
+    userID=userId;
     return _ProfileState();
   }
 }
 
 class _ProfileState extends State<ProfilePage> {
 
+  void createRecord(){
+    databaseReference.child("Users").child(userID).set({
+      'userName':userName,
+      'userBio':userBio,
+      'userInterest':selectedInterest,
+      'userType':selectedTrip,
+      'instagramUserName':instagramUserName,
+    });
+  }
+
   List<Widget> widgets = [FirstPageWidget(), SecondPageWidget(),ThirdPageWidget(),FourthPageWidget(),FifthPageWidth(),SixthPageWidget()];
 
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     // TODO: implement build
     return new Scaffold(
       appBar: new AppBar(title: new Text("Profile")),
       body: new SingleChildScrollView(
           child: Container(
-        color: Colors.indigo,
-        height: 2000,
-        child: Column(
-          children: <Widget>[
+            color: Colors.indigo,
+            height: 0.89*screenSize.height,
+          child: Column(
+            children: <Widget>[
             Container(
               height: 100,
             ),
@@ -51,7 +77,14 @@ class _ProfileState extends State<ProfilePage> {
                   },
                 );
               }).toList(),
-            )
+            ),
+              RaisedButton(
+                child:new Text('Submit and Proceed'),
+                onPressed:(){
+                  createRecord();
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FollowWidget()));
+                },
+              )
           ],
         ),
       )),
@@ -65,10 +98,7 @@ class FirstPageWidget extends StatefulWidget {
 }
 
 class _FirstPageWidgetState extends State<FirstPageWidget> {
-  TextEditingController userNameController = new TextEditingController();
-  TextEditingController userBioController = new TextEditingController();
-  var userName = '';
-  var userBio = '';
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +107,7 @@ class _FirstPageWidgetState extends State<FirstPageWidget> {
       child: Container(
         child: Column(
           children: <Widget>[
-            new TextField(
+            TextField(
               controller: userNameController,
               onChanged: (value) {
                 userName = value;
@@ -90,13 +120,26 @@ class _FirstPageWidgetState extends State<FirstPageWidget> {
             Container(
               height: 50.0,
             ),
-            new TextField(
+            TextField(
               controller: userBioController,
               onChanged: (value) {
                 userBio = value;
               },
               decoration: InputDecoration(
                   labelText: 'Hey,let others know about you!',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0))),
+            ),
+            Container(
+              height: 30.0,
+            ),
+            TextField(
+              controller: instagramUserNameController,
+              onChanged: (value) {
+                instagramUserName = value;
+              },
+              decoration: InputDecoration(
+                  labelText: 'Instagram Username',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0))),
             ),
@@ -149,7 +192,9 @@ class _SecondPageWidgetState extends State<SecondPageWidget> {
             "PILGRIMAGE / RELIGIOUS",
             "CULTURAL HERITAGE",
             "CALCULATIONAL"
-          ], onSelected: (String selected) => print(selected)),
+          ], onSelected: (String selected) => {
+            selectedInterest=selected,
+          }),
         ],
       ),
     );
@@ -180,7 +225,9 @@ class _ThirdPageWidgetState extends State<ThirdPageWidget> {
             "One day",
             "Weekend",
             "10 days"
-          ], onSelected: (String selected) => print(selected)),
+          ], onSelected: (String selected) => {
+            selectedTrip=selected,
+          }),
         ],
       ),
     );
@@ -212,7 +259,9 @@ class _FourthPageWidgetState extends State<FourthPageWidget> {
             "3",
             "4",
             "5"
-          ], onSelected: (String selected) => print(selected)),
+          ], onSelected: (String selected) => {
+            //selectedRating=selected,
+          }),
         ],
       ),
     );
@@ -239,9 +288,11 @@ class _FifthPageWidthState extends State<FifthPageWidth> {
           ),
           RadioButtonGroup(labels: <String>[
             "Yes",
-            "N , I mostly rent",
+            "Nah! I mostly rent",
             "Prefer Public Transport"
-          ], onSelected: (String selected) => print(selected)),
+          ], onSelected: (String selected) => {
+            //selectedTransport=selected,
+          }),
         ],
       ),
     );
@@ -262,7 +313,7 @@ class _SixthPageWidgetState extends State<SixthPageWidget> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              "Do you Travel ALONE ? ",
+              "Do you like solo trips? ",
               style: new TextStyle(
                   fontSize: 25.0, wordSpacing: 1, fontWeight: FontWeight.w600),
             ),
@@ -270,7 +321,9 @@ class _SixthPageWidgetState extends State<SixthPageWidget> {
           RadioButtonGroup(labels: <String>[
             "Yes",
             "No"
-          ], onSelected: (String selected) => print(selected)),
+          ], onSelected: (String selected) => {
+            //selectedPreference=selected,
+          }),
         ],
       ),
     );
