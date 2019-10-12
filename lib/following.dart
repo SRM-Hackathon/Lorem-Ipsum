@@ -17,13 +17,14 @@ class FollowWidget extends StatefulWidget {
 }
 
 class _FollowWidgetState extends State<FollowWidget> {
-  List<String> litems = ['user1', 'user2', 'user3', 'user4'];
+  List<String> litems = ['Harshana', 'Jahnavi', 'Jay', 'Vijay'];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Followers'),
+        title: Text('Followers',),
+        backgroundColor: Colors.green,
       ),
       body: Column(
         children: <Widget>[
@@ -34,18 +35,8 @@ class _FollowWidgetState extends State<FollowWidget> {
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.blue,
-                letterSpacing: 2,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 15),
-            child: Text(
-              'People you can follow',
-              style: TextStyle(
-                fontSize: 15.0,
-                fontWeight: FontWeight.bold,
+                color: Colors.green,
+                letterSpacing: 3,
               ),
             ),
           ),
@@ -53,14 +44,14 @@ class _FollowWidgetState extends State<FollowWidget> {
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: ListView.builder(
-                  itemCount: 5,
+                  itemCount: litems.length,
                   itemBuilder: (BuildContext ctxt, int Index) {
                     return Card(
                       elevation: 5,
                       child: Column(
                         children: <Widget>[
                           ListTile(
-                            title: Text('User $Index'),
+                            title: Text(litems[Index]),
                             leading: CircleAvatar(
                               radius: 30.0,
                               backgroundImage: AssetImage(
@@ -71,18 +62,8 @@ class _FollowWidgetState extends State<FollowWidget> {
                             Navigator.push(context, MaterialPageRoute(builder: (context) => FollowRoute()))
                           },
                           ),
-                          ButtonTheme.bar(
-                            // make buttons use the appropriate styles for cards
-                            child: ButtonBar(
-                              children: <Widget>[
-                                FlatButton(
-                                  child: const Text('Follow'),
-                                  onPressed: () {
-                                    /* ... */
-                                  },
-                                ),
-                              ],
-                            ),
+                          Container(
+                            height: 30.0,
                           )
                         ],
                       ),
@@ -93,7 +74,7 @@ class _FollowWidgetState extends State<FollowWidget> {
           new RaisedButton(
             child: new Text('Next'),
             onPressed: (){
-              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => ChallengeWidget()));
+              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => ChallengeWidget(userId:userID)));
             },
           )
         ],

@@ -1,19 +1,27 @@
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:globetrottar/AppCall.dart';
+import 'package:firebase_database/firebase_database.dart';
+
+final databaseReference = FirebaseDatabase.instance.reference();
 String userPlace;
+String userId;
 class LocationWidget extends StatefulWidget {
 
-  LocationWidget({this.UserPlace});
+  LocationWidget({this.userID,this.UserPlace});
+  final String userID;
   final String UserPlace;
   @override
   createState() {
     userPlace=this.UserPlace;
+    userId=this.userID;
    return _LocationWidgetState();
 
   }
 }
+
 class _LocationWidgetState extends State<LocationWidget> {
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -140,8 +148,9 @@ class _LocationWidgetState extends State<LocationWidget> {
             ),
             Container(
               child:RaisedButton(
-                child: new Text('Create'),
+                child: new Text('Check In'),
                 onPressed: (){
+                  //createRecords();
                   Navigator.push(context, MaterialPageRoute(
                       builder:(context) => MyApp()));
                 },
@@ -156,6 +165,15 @@ class _LocationWidgetState extends State<LocationWidget> {
   }
 
   }
+void createRecords(){
+  databaseReference.child("Users").child(userId).child("Places").set({
+    'place':userPlace
+  });
+  databaseReference.child("Places").child(userPlace).set(
+    {
+    'user':userId
+    }
+  );}
 class UserRoute extends StatelessWidget
 {
   UserRoute({this.urlString,this.number});

@@ -32,32 +32,24 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfileState extends State<ProfilePage> {
 
-  void createRecord(){
-    databaseReference.child("Users").child(userID).set({
-      'userName':userName,
-      'userBio':userBio,
-      'userInterest':selectedInterest,
-      'userType':selectedTrip,
-      'instagramUserName':instagramUserName,
-    });
-  }
 
-  List<Widget> widgets = [FirstPageWidget(), SecondPageWidget(),ThirdPageWidget(),FourthPageWidget(),FifthPageWidth(),SixthPageWidget()];
+  List<Widget> widgets = [FirstPageWidget(), SecondPageWidget(),ThirdPageWidget(),FourthPageWidget(),SixthPageWidget()];
 
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     // TODO: implement build
     return new Scaffold(
-      appBar: new AppBar(title: new Text("Profile")),
+      appBar: new AppBar(title: new Text("Profile"),
+      backgroundColor: Colors.deepOrangeAccent,),
       body: new SingleChildScrollView(
           child: Container(
-            color: Colors.indigo,
+            color: Colors.white,
             height: 0.89*screenSize.height,
           child: Column(
             children: <Widget>[
             Container(
-              height: 100,
+              height: 70,
             ),
             CarouselSlider(
               height: 500.0,
@@ -71,6 +63,13 @@ class _ProfileState extends State<ProfilePage> {
                       margin: EdgeInsets.symmetric(horizontal: 5.0),
                       decoration: BoxDecoration(
                         color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(50.0)
+                        ),
+                        border : Border.all(
+                          color: Colors.deepOrangeAccent,
+                          width: 3.0
+                        )
                       ),
                       child: i,
                     );
@@ -78,13 +77,7 @@ class _ProfileState extends State<ProfilePage> {
                 );
               }).toList(),
             ),
-              RaisedButton(
-                child:new Text('Submit and Proceed'),
-                onPressed:(){
-                  createRecord();
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FollowWidget()));
-                },
-              )
+
           ],
         ),
       )),
@@ -107,58 +100,58 @@ class _FirstPageWidgetState extends State<FirstPageWidget> {
       child: Container(
         child: Column(
           children: <Widget>[
-            TextField(
-              controller: userNameController,
-              onChanged: (value) {
-                userName = value;
-              },
-              decoration: InputDecoration(
-                  labelText: 'Username',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0))),
-            ),
             Container(
-              height: 50.0,
+              height: 30,
             ),
-            TextField(
-              controller: userBioController,
-              onChanged: (value) {
-                userBio = value;
-              },
-              decoration: InputDecoration(
-                  labelText: 'Hey,let others know about you!',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0))),
-            ),
-            Container(
-              height: 30.0,
-            ),
-            TextField(
-              controller: instagramUserNameController,
-              onChanged: (value) {
-                instagramUserName = value;
-              },
-              decoration: InputDecoration(
-                  labelText: 'Instagram Username',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0))),
-            ),
-            Container(
-              height: 30.0,
-            ),
-            ButtonTheme.bar(
-              // make buttons use the appropriate styles for cards
-              child: ButtonBar(
-                children: <Widget>[
-                  FlatButton(
-                    child: const Text('UPDATE DETAILS'),
-                    onPressed: () {
-                      /* ... */
-                    },
-                  ),
-                ],
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: TextField(
+                controller: userNameController,
+                onChanged: (value) {
+                  userName = value;
+                },
+                decoration: InputDecoration(
+                    labelText: 'Username',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0))),
               ),
-            )
+            ),
+            Container(
+              height: 30.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: TextField(
+                controller: userBioController,
+                onChanged: (value) {
+                  userBio = value;
+                },
+                decoration: InputDecoration(
+                    labelText: 'About You ',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0))),
+              ),
+            ),
+            Container(
+              height: 30.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: TextField(
+                controller: instagramUserNameController,
+                onChanged: (value) {
+                  instagramUserName = value;
+                },
+                decoration: InputDecoration(
+                    labelText: 'Instagram Username',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0))),
+              ),
+            ),
+            Container(
+              height: 30.0,
+            ),
+
           ],
         ),
       ),
@@ -178,7 +171,7 @@ class _SecondPageWidgetState extends State<SecondPageWidget> {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(30.0),
             child: Text(
               "What type of trips most interest you?",
               style: new TextStyle(
@@ -186,12 +179,12 @@ class _SecondPageWidgetState extends State<SecondPageWidget> {
             ),
           ),
           RadioButtonGroup(labels: <String>[
-            "ADVENTURE",
-            "RECEUTION",
-            "ENVIRONMENT",
-            "PILGRIMAGE / RELIGIOUS",
-            "CULTURAL HERITAGE",
-            "CALCULATIONAL"
+            "Adventure",
+            "Recreation",
+            "Environment",
+            "Pilgrimage",
+            "Cultural Heritage",
+            "Educational"
           ], onSelected: (String selected) => {
             selectedInterest=selected,
           }),
@@ -208,27 +201,28 @@ class ThirdPageWidget extends StatefulWidget {
 class _ThirdPageWidgetState extends State<ThirdPageWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              "How long do you generally prefer your trips to last ",
-              style: new TextStyle(
-                  fontSize: 25.0, wordSpacing: 1, fontWeight: FontWeight.w600),
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Text(
+                "How long do you want to  travel ? ",
+                style: new TextStyle(
+                    fontSize: 25.0, wordSpacing: 1, fontWeight: FontWeight.w600),
+              ),
             ),
-          ),
-          RadioButtonGroup(labels: <String>[
-            "2 hrs",
-            "12 hrs",
-            "One day",
-            "Weekend",
-            "10 days"
-          ], onSelected: (String selected) => {
-            selectedTrip=selected,
-          }),
-        ],
+            RadioButtonGroup(labels: <String>[
+              "One Day",
+              "Weekend",
+              "Ten Days"
+            ], onSelected: (String selected) => {
+              selectedTrip=selected,
+            }),
+          ],
+        ),
       ),
     );
   }
@@ -242,62 +236,65 @@ class FourthPageWidget extends StatefulWidget {
 class _FourthPageWidgetState extends State<FourthPageWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              "Are you an avid traveller ? rate yourself !!! ",
-              style: new TextStyle(
-                  fontSize: 25.0, wordSpacing: 1, fontWeight: FontWeight.w600),
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Text(
+                "Are you an avid traveller ? rate yourself !!! ",
+                style: new TextStyle(
+                    fontSize: 25.0, wordSpacing: 1, fontWeight: FontWeight.w600),
+              ),
             ),
-          ),
-          RadioButtonGroup(labels: <String>[
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
-          ], onSelected: (String selected) => {
-            //selectedRating=selected,
-          }),
-        ],
+            RadioButtonGroup(labels: <String>[
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ], onSelected: (String selected) => {
+              //selectedRating=selected,
+            }),
+          ],
+        ),
       ),
     );
   }
 }
-class FifthPageWidth extends StatefulWidget {
-  @override
-  _FifthPageWidthState createState() => _FifthPageWidthState();
-}
-
-class _FifthPageWidthState extends State<FifthPageWidth> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              "Do you prefer using your own Vehicle ? ",
-              style: new TextStyle(
-                  fontSize: 25.0, wordSpacing: 1, fontWeight: FontWeight.w600),
-            ),
-          ),
-          RadioButtonGroup(labels: <String>[
-            "Yes",
-            "Nah! I mostly rent",
-            "Prefer Public Transport"
-          ], onSelected: (String selected) => {
-            //selectedTransport=selected,
-          }),
-        ],
-      ),
-    );
-  }
-}
+//class FifthPageWidth extends StatefulWidget {
+//  @override
+//  _FifthPageWidthState createState() => _FifthPageWidthState();
+//}
+//
+//class _FifthPageWidthState extends State<FifthPageWidth> {
+//  @override
+//  Widget build(BuildContext context) {
+//    return Container(
+//      child: Column(
+//        children: <Widget>[
+//          Padding(
+//            padding: const EdgeInsets.all(30.0),
+//            child: Text(
+//              "Do you prefer using your own Vehicle ? ",
+//              style: new TextStyle(
+//                  fontSize: 25.0, wordSpacing: 1, fontWeight: FontWeight.w600),
+//            ),
+//          ),
+//          RadioButtonGroup(labels: <String>[
+//            "Yes",
+//            "Nah! I mostly rent",
+//            "Prefer Public Transport"
+//          ], onSelected: (String selected) => {
+//            //selectedTransport=selected,
+//          }),
+//        ],
+//      ),
+//    );
+//  }
+//}
 
 class SixthPageWidget extends StatefulWidget {
   @override
@@ -305,188 +302,61 @@ class SixthPageWidget extends StatefulWidget {
 }
 
 class _SixthPageWidgetState extends State<SixthPageWidget> {
+  void createRecord(){
+    databaseReference.child("Users").child(userID).set({
+      'userName':userName,
+      'userBio':userBio,
+      'userInterest':selectedInterest,
+      'userType':selectedTrip,
+      'instagramUserName':instagramUserName,
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              "Do you like solo trips? ",
-              style: new TextStyle(
-                  fontSize: 25.0, wordSpacing: 1, fontWeight: FontWeight.w600),
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(50.0),
+              child: Text(
+                "How do you like to Travel?",
+                style: new TextStyle(
+                    fontSize: 25.0, wordSpacing: 1, fontWeight: FontWeight.w600),
+              ),
             ),
-          ),
-          RadioButtonGroup(labels: <String>[
-            "Yes",
-            "No"
-          ], onSelected: (String selected) => {
-            //selectedPreference=selected,
-          }),
-        ],
+            RadioButtonGroup(labels: <String>[
+              "Alone",
+              "Couple",
+              "Group"
+            ], onSelected: (String selected) => {
+              //selectedPreference=selected,
+            }),
+            Container(
+              height: 40,
+            ),
+            RaisedButton(
+              child:new Text('Submit and Proceed'),
+              color: Colors.deepOrangeAccent,
+                elevation: 5.0,
+              textColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20.0)
+                )
+              ),
+              onPressed:(){
+                createRecord();
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => FollowWidget()));
+              },
+            )
+          ],
+        ),
       ),
     );
   }
 }
 
 
-
-
-//  List<Widget> fillUserDetails() {
-//    return [
-////      SizedBox(
-////        height: 30.0,
-////      )
-////      ,
-////      new Text("Profile Picture"),
-////      SizedBox(
-////        height: 80.0,
-////      ),
-////      new Text("Username"),
-////      new TextField(
-////        controller: userNameController,
-////        onChanged: (value) {
-////          userName = value;
-////        },
-////        decoration: InputDecoration(
-////            labelText: 'Username',
-////            border:
-////            OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-////      ),
-////      new Text("About you"),
-////      new TextField(
-////        controller: userBioController,
-////        onChanged: (value) {
-////          userBio = value;
-////        },
-////
-////        decoration: InputDecoration(
-////            labelText: 'Hey,let others know about you!',
-////            border:
-////            OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-////      ),
-////      SizedBox(
-////        height: 30.0,
-////      ),
-////      new Text("Answer these to let us understand you more!"),
-//
-////      new ListView(scrollDirection: Axis.horizontal, children: <Widget>[
-////        Container(
-////          margin: EdgeInsets.symmetric(vertical: 20.0),
-////          height: 200.0,
-////          width: 160.0,
-////          child: new Column(
-////            children: <Widget>[
-////              new Container(
-////                color: Colors.indigo,
-////                child: new Text(
-////                  "What type of trips most interest you?",
-////                  style: new TextStyle(
-////                      color: Colors.white,
-////                      fontSize: 30.0,
-////                      fontWeight: FontWeight.w600),
-////                ),
-////              ),
-////              new Container(
-////                color: Colors.white,
-////                child: new ListTile(
-////                  title: new Text('Lorem'),
-//////                  title: DropdownButton(
-//////                    items: userInterests.map((String userInterest) {
-//////                      return DropdownMenuItem<String>(
-//////                        value: userInterest,
-//////                        child: Text(userInterest),
-//////                      );
-//////                    }).toList(),
-//////                    value: selectedUserInterest,
-//////                    onChanged: (value) {
-//////                      setState(() {
-//////                        selectedUserInterest = value;
-//////                      });
-//////                    },
-//////                  ),
-////                ),
-////              )
-////            ],
-////          ),
-////        ),
-////        Container(
-////          width: 160.0,
-////          child: new Column(
-////            children: <Widget>[
-////              new Container(
-////                color: Colors.orange,
-////                child: new Text(
-////                  "Are you an avid traveller?",
-////                  style: new TextStyle(
-////                      color: Colors.white,
-////                      fontSize: 30.0,
-////                      fontWeight: FontWeight.w600),
-////                ),
-////              ),
-////              new Container(
-////                color: Colors.white,
-////                child: new ListTile(
-////                    title: new Text('Lorem')
-//////                  title: DropdownButton(
-//////                    items: userTypes.map((String userType) {
-//////                      return DropdownMenuItem<String>(
-//////                        value: userType,
-//////                        child: Text(userType),
-//////                      );
-//////                    }).toList(),
-//////                    value: selectedUserType,
-//////                    onChanged: (value) {
-//////                      setState(() {
-//////                        selectedUserType = value;
-//////                      });
-//////                    },
-//////                  ),
-////                ),
-////              )
-////            ],
-////          ),
-////        ),
-////        Container(
-////          width: 160.0,
-////          child: new Column(
-////            children: <Widget>[
-////              new Container(
-////                color: Colors.orange,
-////                child: new Text(
-////                  "How long do you want your trips to last?",
-////                  style: new TextStyle(
-////                      color: Colors.white,
-////                      fontSize: 30.0,
-////                      fontWeight: FontWeight.w600),
-////                ),
-////              ),
-////              new Container(
-////                color: Colors.white,
-////                child: new ListTile(
-////                    title: new Text('Lorem')
-//////  title: DropdownButton(
-//////  items: userDurations.map((String userDuration) {
-//////  return DropdownMenuItem<String>(
-//////  value: userDuration,
-//////  child: Text(userDuration),
-//////  );
-//////  }).toList(),
-//////  value: selectedUserDuration,
-//////  onChanged: (value) {
-//////  setState(() {
-//////  selectedUserDuration = value;
-//////  });
-//////  },
-//////  ),
-////                ),
-////              )
-////            ],
-////          ),
-////        )
-////        ,
-////      ]
-////      )
-//    ];
-//  }

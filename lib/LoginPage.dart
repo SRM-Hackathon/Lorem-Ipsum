@@ -87,7 +87,8 @@ class _LoginState extends State<LoginPage>
     // TODO: implement build
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text("FLutter Blog App"),
+          title: new Text("GlobetrottAR",),
+          backgroundColor: Colors.blueAccent,
         ),
         resizeToAvoidBottomInset: false,
         body: new SingleChildScrollView(child: new Container(
@@ -95,9 +96,12 @@ class _LoginState extends State<LoginPage>
             child: new Form
               (
               key: formKey,
-              child: new Column(
-                children: createInput()+createButtons(),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 150),
+                child: new Column(
+                  children: createInput()+createButtons(),
 
+                ),
               ),
             )
         ))
@@ -146,8 +150,15 @@ class _LoginState extends State<LoginPage>
         [
           new RaisedButton(
             child: new Text("Login",style: new TextStyle(fontSize: 20.0),),
+            elevation: 5.0,
             textColor: Colors.white,
-            color: Colors.pink,
+            color: Colors.blueAccent,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                    Radius.circular(50.0)
+                )
+            ),
+
             onPressed: _validateAndSubmit,
           ),
           new FlatButton(
@@ -164,8 +175,14 @@ class _LoginState extends State<LoginPage>
         [
           new RaisedButton(
             child: new Text("Create Account",style: new TextStyle(fontSize: 20.0),),
+            elevation: 5.0,
             textColor: Colors.white,
-            color: Colors.pink,
+            color: Colors.blueAccent,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                    Radius.circular(50.0)
+                )
+            ),
             onPressed: _validateAndSubmit ,
           ),
           new FlatButton(
