@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'Location.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,65 +36,37 @@ class _ChallengeWidgetState extends State<ChallengeWidget> {
     return Scaffold(
       appBar: AppBar(
         title: Text('GlobetrottAR'),
-        leading: CircleAvatar(
-          radius: 30.0,
-          backgroundImage: AssetImage(
-            'images/user_dp.jpg',
-          ),
-        ),
       ),
       body: Column(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left: 35.0, top: 20.0),
             child: Text(
-              'CHALLENGES',
+              'Recommended Places',
               style: TextStyle(
-                fontSize: 20.0,
+                fontSize: 40.0,
                 fontWeight: FontWeight.bold,
                 color: Colors.blue,
                 letterSpacing: 2,
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 15),
-            child: Text(
-              'We have got few challenes for you , try them !!',
-              style: TextStyle(
-                fontSize: 15.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
           Expanded(
               child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: ListView.builder(
-              itemCount: data.length==null?0:data.length,
+            child: data==null?Text("Fetching destinations for you..."):ListView.builder(
+              itemCount: data.length,
               itemBuilder: (BuildContext ctxt, int Index) {
                 return Card(
                   elevation: 5,
-                  child: Column(
+                  child: Stack(
                     children: <Widget>[
-                      ListTile(
-                        title: Text(data[Index],style: new TextStyle(fontSize: 20.0,fontWeight: FontWeight.w700,letterSpacing: 2),),
-                        leading: CircleAvatar(
-                          radius: 30.0,
-                          backgroundImage: AssetImage(
-                            'images/user_dp.jpg',
-                          ),
-                        ),
-                        subtitle: Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-                            style:new TextStyle(
-                          fontSize: 12.0,
-                        )),
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => LocationWidget(UserPlace:data[Index])));
-                        },
-                      ),
+
+                      Opacity(opacity: 0.80, child: Image.asset('images/$Index.jpg')),
+                      Center(child: Text(data[Index],style: new TextStyle(color: Colors.white, fontSize: 30.0,fontWeight: FontWeight.w900,letterSpacing: 2),))
                     ],
-                  ),
+                  )
+
                 );
               },
             ),

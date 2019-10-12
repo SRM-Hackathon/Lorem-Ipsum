@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "185127024080",
+    "firebase_url": "https://globetrottarflutter.firebaseio.com",
+    "project_id": "globetrottarflutter",
+    "storage_bucket": "globetrottarflutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185127024080:android:56b63ded5b9b95921db5d5",
+        "android_client_info": {
+          "package_name": "com.jayvishaal.globetrottar_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "185127024080-e6ja5ktd7j90l0gstippcima1tqbcqdi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrHt9CKSQyyi_VVAYnJUZ-fV0y_k9eYlA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "185127024080-e6ja5ktd7j90l0gstippcima1tqbcqdi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
