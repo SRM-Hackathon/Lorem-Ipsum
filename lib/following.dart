@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'Challenge.dart';
 final databaseReference = FirebaseDatabase.instance.reference();
 String userID;
 
@@ -89,6 +90,12 @@ class _FollowWidgetState extends State<FollowWidget> {
                   },
                 ),
               )),
+          new RaisedButton(
+            child: new Text('Next'),
+            onPressed: (){
+              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => ChallengeWidget()));
+            },
+          )
         ],
       ),
     );
